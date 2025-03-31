@@ -1,4 +1,4 @@
-import path = require("path");
+import path = require("node:path");
 
 export const rootDir = path.join(__dirname, '..');
 export const srcDir = path.join(rootDir, 'src');

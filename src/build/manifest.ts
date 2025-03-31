@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import * as uuid from "uuid";
 import { behaviorPackDir, resourcePackDir } from "./paths";
 
@@ -64,7 +64,7 @@ interface manifest {
 const moduleEntries: scriptModuleDependency[] = [
   {
     module_name: "@minecraft/server",
-    version: "1.2.0-beta"
+    version: "2.0.0-beta"
   },
   {
     module_name: "@minecraft/server-gametest",
@@ -72,7 +72,7 @@ const moduleEntries: scriptModuleDependency[] = [
   },
   {
     module_name: "@minecraft/server-ui",
-    version: "1.0.0-beta"
+    version: "2.0.0-beta"
   },
   // {
   //   module_name: "@minecraft/server-admin",
@@ -104,7 +104,7 @@ function BehaviorPack(): void {
       description: `Scripting interpreter in Minecraft (${typeof addonVersion === 'object' ? addonVersion.join('.') : addonVersion})`,
       uuid: headerUUID.behavior_pack ?? uuid.v4(),
       version: addonVersion,
-      min_engine_version: [1, 19, 80], // Minecraft version required to use this behavior pack
+      min_engine_version: [1, 21, 70], // Minecraft version required to use this behavior pack
     },
     modules: [
       {
@@ -149,7 +149,7 @@ function ResourcePack() {
       description: "Resource pack for scripting interpreter",
       uuid: headerUUID.resource_pack ?? uuid.v4(),
       version: addonVersion,
-      min_engine_version: [1, 19, 0],
+      min_engine_version: [1, 21, 70],
       // Minecraft version required to use this resource pack
     },
     modules: [

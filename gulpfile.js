@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const ts = require('gulp-typescript');
+const ts = require("gulp-typescript");
 const debug = require("gulp-debug");
 const child_process = require("child_process");
 
@@ -56,7 +56,7 @@ function build (done) {
  * @param {(error?: Error | null) => void} done
  */
 function webpackBuild (done) {
-  child_process.exec('npx webpack --config ./webpack.config.js', (error, stdout, stderr) => {
+  child_process.exec("npx webpack --config ./webpack.config.js", (error, stdout, stderr) => {
     console.log(stdout);
 
     // Build behavior pack, gulp done function executes when the function is done
@@ -70,7 +70,7 @@ function webpackBuild (done) {
  * @param {(error?: Error | null) => void} done
  */
 function executeBuildScripts (done) {
-  require('./dist/index');
+  require("./dist/index");
   done();
 };
 
@@ -78,9 +78,9 @@ function executeBuildScripts (done) {
 gulp.task("build", build);
 gulp.task("scripts-js", scriptsJs); // Deprecated, replaced with webpack
 gulp.task("scripts", scripts); // Deprecated, replaced with webpack
-gulp.task('webpack-scripts', webpackBuild);
+gulp.task("webpack-scripts", webpackBuild);
 
-gulp.task('default', gulp.parallel([
-  'build',
-  // 'webpack-scripts',
+gulp.task("default", gulp.parallel([
+  "build",
+  // "webpack-scripts",
 ]));

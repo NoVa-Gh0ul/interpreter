@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const srcScriptsPath = path.resolve(__dirname, 'src', 'behavior_pack', 'scripts');
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const tsconfig = require(path.join(srcScriptsPath, "tsconfig.json"));

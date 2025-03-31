@@ -1,5 +1,5 @@
 import * as https from "https";
-import * as fs from "fs";
+import * as fs from "node:fs";
 import path = require("path");
 import { behaviorPackDir, resourcePackDir } from "./paths";
 import * as dns from 'dns';

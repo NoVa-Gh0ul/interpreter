@@ -11,6 +11,7 @@ fs.existsSync(distPath) ? true : fs.mkdirSync(distPath);
 for (const file of fs.readdirSync(rpPath)) {
   console.log('Copying', file);
   const dist = path.join(distPath, file);
+  // @ts-ignore
   fs.copySync(path.join(rpPath, file), dist, { recursive: true, overwrite: true });
   console.log('Copied', file);
 

@@ -72,6 +72,7 @@ export function codeExecute (source: Player) {
   ModalForm.show(source).then((response) => {
     if (response.canceled) return console.log(`Interpreter form was canceled by the player (${response.cancelationReason})`);
     const { formValues } = response;
+    // @ts-expect-error
     const [ input ]: string[] = formValues;
     const startTime: number = new Date().getTime();
 

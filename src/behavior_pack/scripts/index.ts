@@ -1,4 +1,4 @@
-import { EntityInventoryComponent, ItemStack, ItemType, MinecraftBlockTypes, MinecraftItemTypes, Player, world } from "@minecraft/server";
+import { EntityInventoryComponent, ItemStack, ItemType, BlockTypes, ItemTypes, Player, world } from "@minecraft/server";
 import { ActionFormData, MessageFormData } from "@minecraft/server-ui";
 import { MinecraftColors } from "code-highlight/highlight";
 import { Commands } from "Commands";
@@ -9,7 +9,7 @@ import { codeExecute } from "runtime-js";
 
 const javascriptItemLore: string = '§r§5Use this item to open JavaScript interpreter';
 const typescriptItemLore: string = '§r§5Use this item to open TypeScript interpreter';
-const itemType: ItemType = MinecraftItemTypes.enchantedBook;
+const itemType: ItemType = ItemTypes.get("minecraft:enchanted_book");
 const internalWarn: string = '[Interpreter] Internal mode has been enabled. These work-in-progress features can be unstable and may not be representative of final version quality.';
 
 function showDeprecatedForm (source: Player) {
@@ -91,8 +91,8 @@ Commands.register(prefix, 'interpreter', async ({player, argv}) => {
 });
 
 // players hold enchanted books to open interpreter
-world.events.beforeItemUse.subscribe(eventData => {
-  const { source, item } = eventData; // get player
+world.beforeEvents.itemUse.subscribe(eventData => {
+  const { source, itemStack: item } = eventData; // get player 
 
   if (!(source instanceof Player)) return; // return if source is not player
   if (item.typeId !== itemType.id) return; // return if player is not using same item type
@@ -118,12 +118,12 @@ world.events.beforeItemUse.subscribe(eventData => {
 });
 
 // players interacts with script block
-world.events.beforeItemUseOn.subscribe((event) => {
+world.beforeEvents.itemUse.subscribe((event) => {
   const { source } = event;
-  const block = source.dimension.getBlock(event.getBlockLocation());
+  const block = source.dimension.getBlock(source.getBlockFromViewDirection().block.location);
 
   if (!(source instanceof Player)) return;
-  if (block.type !== MinecraftBlockTypes.get('interpreter:script_block')) return;
+  if (block.type !== BlockTypes.get('interpreter:script_block')) return;
   if (isNotOp(source)) {
     // return if player is not op, player must have perms to use terminal
     source.sendMessage(`${MinecraftColors.red}You do not have permission to use this item.`);

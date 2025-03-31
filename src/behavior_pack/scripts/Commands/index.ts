@@ -70,7 +70,7 @@ export class Commands {
    * @throws This function can throw errors.
    */
   static async runAsync(commandString: string, target: Dimension | Entity = world.getDimension("overworld")): Promise<CommandResult> {
-    if (target instanceof Dimension || Entity) return target.runCommandAsync(commandString);
+    if (target instanceof Dimension || Entity) return target.runCommand(commandString);
     else throw TypeError("Native type conversion failed");
   };
 
@@ -95,7 +95,7 @@ export class Commands {
    */
   public static register (prefix: string, command: string, commandFunction: (arg: Command) => void): void {
     if (prefix.startsWith("/")) throw Error ("Unable to register slash commands.");
-    world.events.beforeChat.subscribe((arg) => {
+    world.beforeEvents.chatSend.subscribe((arg) => {
       var argv = arg.message.split(/(".*?"|[^"\s]+)+(?=\s*|\s*$)/g).filter( e => e.trim().length > 0);
       if (argv[0].toLowerCase() === `${prefix.toLowerCase()}${command.toLowerCase()}`) {
         arg.cancel = true;
